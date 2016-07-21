@@ -1,0 +1,15 @@
+{
+  "name": "mondrianify",
+  "author": "nvdv",
+  "dependencies": {
+    "typescript": "1.8.10"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "BSD-2-Clause",
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/nvdv/mondrianify.git"
+ }
+}

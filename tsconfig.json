@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outFile": "build/mondrianify.js",
+    "sourceMap": true
+  },
+  "files": [
+    "src/canvas_objects.ts"
+  ]
+}
