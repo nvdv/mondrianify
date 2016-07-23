@@ -82,6 +82,6 @@ class Tree2D {
   }
 
   getLargestSpan(): Span {
-    return this.getAllSpans().reduce((a, b) =>  a.area > b.area ? a : b);
+    return this.getAllSpans().reduce((a, b) => a.area > b.area ? a : b);
   }
 }

@@ -5,7 +5,8 @@
     "typescript": "1.8.10"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "tsc --out src/test/unittests.js src/test/canvas_objects_test.ts && open src/test/unittests.html"
   },
   "license": "BSD-2-Clause",
   "repository" : {
