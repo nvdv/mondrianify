@@ -67,13 +67,17 @@ class Tree2D {
     this.root = this.insertNode(p, this.root, Axis.X, this.canvasSpan);
   }
 
-  getAllSpans(): Array<Span> {
+  getChildrenSpans(): Array<Span> {
     var result = [];
     var spansInOrder = (node: TreeNode) => {
       if (node) {
         spansInOrder(node.leftChild);
-        result.push(node.leftSpan);
-        result.push(node.rightSpan);
+        if (!node.leftChild) {
+          result.push(node.leftSpan);
+        }
+        if (!node.rightChild) {
+          result.push(node.rightSpan);
+        }
         spansInOrder(node.rightChild);
       }
     };
@@ -81,7 +85,9 @@ class Tree2D {
     return result;
   }
 
-  getLargestSpan(): Span {
-    return this.getAllSpans().reduce((a, b) => a.area > b.area ? a : b);
+  getLargestChildSpan(): Span {
+    return this.getChildrenSpans().reduce((a, b) => a.area > b.area ? a : b);
   }
 }
+
+export { Span, Point, Tree2D };

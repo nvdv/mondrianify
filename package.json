@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "tsc --out src/test/unittests.js src/test/canvas_objects_test.ts && open src/test/unittests.html"
+    "test": "tsc src/test/canvas_objects_test.ts && node src/test/canvas_objects_test.js"
   },
   "license": "BSD-2-Clause",
   "repository" : {
