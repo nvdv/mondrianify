@@ -90,4 +90,25 @@ class Tree2D {
   }
 }
 
-export { Span, Point, Tree2D };
+function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
+  let getRandomInt = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  let canvas = new Tree2D(canvasSpan);
+  var xRand = getRandomInt(canvasSpan.xmin, canvasSpan.xmax);
+  var yRand = getRandomInt(canvasSpan.ymin, canvasSpan.ymax);
+  canvas.insert(new Point(xRand, yRand));
+  for (let i = 0; i < numPoints - 1; i++) {
+    let largestSpan = canvas.getLargestChildSpan();
+    let dx = largestSpan.xmax - largestSpan.xmin;
+    let dy = largestSpan.ymax - largestSpan.ymin;
+    let rx = dx / scaleK, ry = dy / scaleK;
+    xRand = getRandomInt(largestSpan.xmin + rx , largestSpan.xmax - rx);
+    yRand = getRandomInt(largestSpan.ymin + ry , largestSpan.ymax - ry);
+    canvas.insert(new Point(xRand, yRand));
+  }
+  return canvas;
+}
+
+export { Span, Point, Tree2D, createTree };
