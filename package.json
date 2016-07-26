@@ -2,10 +2,12 @@
   "name": "mondrianify",
   "author": "nvdv",
   "dependencies": {
-    "typescript": "1.8.10"
+    "typescript": "1.8.10",
+    "browserify": "13.0.1",
+    "tsify": "1.0.1"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "browserify src/draw.ts -p [ tsify --debug ] > build/draw.js",
     "test": "tsc src/test/canvas_objects_test.ts && node src/test/canvas_objects_test.js"
   },
   "license": "BSD-2-Clause",

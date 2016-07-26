@@ -28,12 +28,12 @@ class TreeNode{
 // Represents 2D tree on canvas.
 class Tree2D {
   private root: TreeNode;
-  constructor(private canvasSpan: Span) {
+  constructor(public canvasSpan: Span) {
   }
 
   private insertNode(p: Point, currNode: TreeNode, axis: Axis, nodeSpan: Span) {
     if (!currNode) {
-      let leftSpan, rightSpan;
+      let leftSpan: Span, rightSpan: Span;
       if (axis == Axis.X) {
         leftSpan = new Span(nodeSpan.xmin, p.x, nodeSpan.ymin, nodeSpan.ymax);
         rightSpan = new Span(p.x, nodeSpan.xmax, nodeSpan.ymin, nodeSpan.ymax);
@@ -68,8 +68,8 @@ class Tree2D {
   }
 
   getChildrenSpans(): Array<Span> {
-    var result = [];
-    var spansInOrder = (node: TreeNode) => {
+    var result: Span[] = [];
+    let spansInOrder = (node: TreeNode) => {
       if (node) {
         spansInOrder(node.leftChild);
         if (!node.leftChild) {
