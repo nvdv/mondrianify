@@ -111,4 +111,57 @@ function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D
   return canvas;
 }
 
-export { Span, Point, Tree2D, createTree };
+const WHITE_COLOR = '#FFFFFF';
+const RED_COLOR = '#FF0000';
+const YELLOW_COLOR = '#FFFF01';
+const BLUE_COLOR = '#0000FE';
+const BLACK_COLOR = '#000000';
+
+const RED_TILE_RATIO = 0.07;
+const BLUE_TILE_RATIO = 0.07;
+const YELLOW_TILE_RATIO = 0.07;
+const BLACK_TILE_RATIO = 0.05;
+
+function colorizeTree(tree: Tree2D) {
+  let childrenSpans = tree.getChildrenSpans();
+  let numTiles = childrenSpans.length;
+  let numRedTiles = Math.ceil(RED_TILE_RATIO * numTiles);
+  let numBlueTiles = Math.ceil(BLUE_TILE_RATIO * numTiles);
+  let numYellowTiles = Math.ceil(YELLOW_TILE_RATIO * numTiles);
+  let numBlackTiles = Math.ceil(BLACK_TILE_RATIO * numTiles);
+  let numWhiteTiles = (
+    numTiles - numRedTiles - numBlueTiles - numYellowTiles - numBlackTiles);
+
+  let arrayRepeat = (e, times) => {
+    let output = [];
+    for (let i = 0; i < times; i++) {
+      output.push(e);
+    }
+    return output;
+  }
+
+  let availableColors = [].concat(arrayRepeat(WHITE_COLOR, numWhiteTiles))
+    .concat(arrayRepeat(RED_COLOR, numRedTiles))
+    .concat(arrayRepeat(BLUE_COLOR, numBlueTiles))
+    .concat(arrayRepeat(YELLOW_COLOR, numYellowTiles))
+    .concat(arrayRepeat(BLACK_COLOR, numBlackTiles));
+
+  let shuffleArray = (arr) => {
+    for (let i = arr.length; i; i--) {
+      let j = Math.floor(Math.random() * i);
+      let x = arr[i - 1];
+      arr[i - 1] = arr[j];
+      arr[j] = x;
+     }
+  };
+
+  shuffleArray(availableColors);
+  let i = 0;
+  for (let span of childrenSpans) {
+    span.color = availableColors[i];
+    console.log(span);
+    i++;
+  }
+}
+
+export { Span, Point, Tree2D, createTree, colorizeTree };

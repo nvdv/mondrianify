@@ -1,9 +1,9 @@
-import { Span, Tree2D, createTree } from './canvas_objects';
+import { Span, Tree2D, createTree, colorizeTree } from './canvas_objects';
 
 const FRAME_LINE_WIDTH = 9;
 const FRAME_LINE_COLOR = 'black';
 const NORMAL_LINE_WIDTH = 1;
-const NUM_POINTS = 12;
+const NUM_POINTS = 15;
 const SCALE_COEFF = 3;
 
 function drawFrames(context, picture) {
@@ -25,6 +25,17 @@ function drawFrames(context, picture) {
   }
 }
 
+function drawTiles(context, picture) {
+  for (let currSpan of picture.getChildrenSpans()) {
+    context.fillStyle = currSpan.color;
+    context.fillRect(
+      currSpan.xmin,
+      currSpan.ymin,
+      currSpan.xmax - currSpan.xmin,
+      currSpan.ymax - currSpan.ymin);
+  }
+}
+
 function draw() {
   let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
   canvas.width = 0.5 * document.body.clientWidth;
@@ -33,6 +44,8 @@ function draw() {
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
   let picture = createTree(canvasSpan, NUM_POINTS, SCALE_COEFF);
 
+  colorizeTree(picture);
+  drawTiles(context, picture);
   drawFrames(context, picture);
 }
 
