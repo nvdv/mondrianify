@@ -36,10 +36,7 @@ function drawTiles(context, picture) {
   }
 }
 
-function draw() {
-  let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
-  canvas.width = 0.5 * document.body.clientWidth;
-  canvas.height = 0.95 * document.body.clientHeight;
+function draw(canvas) {
   let context = canvas.getContext('2d');
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
   let picture = createTree(canvasSpan, NUM_POINTS, SCALE_COEFF);
@@ -49,4 +46,12 @@ function draw() {
   drawFrames(context, picture);
 }
 
-draw();
+function main() {
+  let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
+  canvas.width = 0.5 * document.body.clientWidth;
+  canvas.height = 0.95 * document.body.clientHeight;
+  canvas.addEventListener('click', (e) => draw(canvas));
+  draw(canvas);
+};
+
+main();
