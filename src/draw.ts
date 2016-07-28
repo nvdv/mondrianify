@@ -39,7 +39,7 @@ function drawTiles(context, picture) {
 function draw() {
   let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
   canvas.width = 0.5 * document.body.clientWidth;
-  canvas.height = 0.9 * document.body.clientHeight;
+  canvas.height = 0.95 * document.body.clientHeight;
   let context = canvas.getContext('2d');
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
   let picture = createTree(canvasSpan, NUM_POINTS, SCALE_COEFF);

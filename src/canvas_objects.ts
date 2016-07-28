@@ -159,7 +159,6 @@ function colorizeTree(tree: Tree2D) {
   let i = 0;
   for (let span of childrenSpans) {
     span.color = availableColors[i];
-    console.log(span);
     i++;
   }
 }
