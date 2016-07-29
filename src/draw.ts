@@ -50,7 +50,7 @@ function main() {
   let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
   canvas.width = 0.5 * document.body.clientWidth;
   canvas.height = 0.95 * document.body.clientHeight;
-  canvas.addEventListener('click', (e) => draw(canvas));
+  canvas.addEventListener('click', (_) => draw(canvas));
   draw(canvas);
 };
 
