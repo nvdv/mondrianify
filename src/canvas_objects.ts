@@ -112,9 +112,9 @@ function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D
 }
 
 const WHITE_COLOR = '#FFFFFF';
-const RED_COLOR = '#FF0000';
-const YELLOW_COLOR = '#FFFF01';
-const BLUE_COLOR = '#0000FE';
+const RED_COLOR = '#C80815';
+const YELLOW_COLOR = '#FFF700';
+const BLUE_COLOR = '#0038A8';
 const BLACK_COLOR = '#000000';
 
 const RED_TILE_RATIO = 0.07;
