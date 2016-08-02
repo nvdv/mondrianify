@@ -24,6 +24,33 @@ function assertEqual(op1, op2) {
   }
 }
 
+function assertTrue(op1) {
+  if (!op1) {
+    throw new Error(JSON.stringify(op1) + ' is not true ');
+  }
+}
+
+function spanIsNeighborTest() {
+  let span = new Span(10, 50, 20, 60);
+  assertTrue(span.isNeighbor(new Span(0, 10, 30, 50)));
+  assertTrue(span.isNeighbor(new Span(0, 10, 10, 70)));
+  assertTrue(!span.isNeighbor(new Span(0, 10, 100, 120)));
+
+  assertTrue(span.isNeighbor(new Span(20, 40, 60, 70)));
+  assertTrue(span.isNeighbor(new Span(0, 100, 60, 70)));
+  assertTrue(!span.isNeighbor(new Span(100, 120, 60, 70)));
+
+  assertTrue(span.isNeighbor(new Span(50, 60, 30, 50)));
+  assertTrue(span.isNeighbor(new Span(50, 60, 10, 100)));
+  assertTrue(!span.isNeighbor(new Span(50, 60, 100, 120)));
+
+  assertTrue(span.isNeighbor(new Span(20, 40, 10, 20)));
+  assertTrue(span.isNeighbor(new Span(0, 100, 10, 20)));
+  assertTrue(!span.isNeighbor(new Span(100, 120, 10, 20)));
+
+  assertTrue(!span.isNeighbor(new Span(70, 90, 50, 80)));
+}
+
 function getLargestSpanTest() {
   let span = new Span(0, 100, 0, 100);
   let tree = new Tree2D(span);
@@ -44,6 +71,7 @@ function getLargestSpanTest() {
 
 function runTests() {
   getLargestSpanTest();
+  spanIsNeighborTest();
 }
 
 runTests();

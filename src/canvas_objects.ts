@@ -1,3 +1,13 @@
+function segmentsIntersect(s1: number, e1: number, s2: number, e2: number): boolean {
+  if (s2 >= s1 && s2 <= e1 || e2 >= s1 && e2 <= e1) {
+    return true;
+  }
+  if (s1 >= s2 && s1 <= e2 || e1 >= s2 && e1 <= e2) {
+    return true;
+  }
+  return false;
+}
+
 // Represents rectangle in 2D space.
 class Span {
   color: string;
@@ -5,6 +15,32 @@ class Span {
   constructor (public xmin: number, public xmax: number,
                public ymin: number, public ymax: number) {
     this.area = (xmax - xmin) * (ymax - ymin);
+  }
+
+  isNeighbor(s: Span): boolean {
+    // Check whether it is sane span,
+    if (this.xmin === s.xmin && this.xmax === s.xmax &&
+        this.ymin === s.ymin && this.ymax === s.ymax) {
+      return false;
+    }
+    // Do side checking,
+    if (this.xmin === s.xmax && segmentsIntersect(this.ymin, this.ymax,
+                                                  s.ymin, s.ymax)) {
+      return true;
+    }
+    if (this.ymax === s.ymin && segmentsIntersect(this.xmin, this.xmax,
+                                                  s.xmin, s.xmax)) {
+      return true;
+    }
+    if (this.xmax === s.xmin && segmentsIntersect(this.ymin, this.ymax,
+                                                   s.ymin, s.ymax)) {
+      return true;
+    }
+    if (this.ymin === s.ymax && segmentsIntersect(this.xmin, this.xmax,
+                                                  s.xmin, s.xmax)) {
+      return true;
+    }
+    return false;
   }
 }
 
@@ -87,6 +123,14 @@ class Tree2D {
 
   getLargestChildSpan(): Span {
     return this.getChildrenSpans().reduce((a, b) => a.area > b.area ? a : b);
+  }
+
+  getNeighborSpans(span: Span): Array<Span> {
+    return this.getChildrenSpans().filter(s => s.isNeighbor(span));
+  }
+
+  getNeighborSpansNoColor(span: Span): Array<Span> {
+    return this.getNeighborSpans(span).filter(s => !s.color);
   }
 }
 
