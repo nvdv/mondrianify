@@ -23,3 +23,8 @@
     height: 95%;
   }
 }
+
+#note {
+  text-align: center;
+  font-family: sans-serif;;
+}
