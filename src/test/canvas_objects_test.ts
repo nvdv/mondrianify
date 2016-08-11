@@ -1,4 +1,4 @@
-import { Span, Point, Tree2D } from "../canvas_objects";
+import { Span, Point, Tree2D, findSuitableColor } from "../canvas_objects";
 
 function isEqual(a, b) {
   var aProps = Object.getOwnPropertyNames(a);
@@ -68,10 +68,30 @@ function getLargestSpanTest() {
   assertEqual(tree.getLargestChildSpan(), new Span(0, 30, 30, 100));
 }
 
+function findSuitableColorTest() {
+  let availableColors = ['black', 'blue', 'white', 'white', 'yellow', 'red'];
+
+  var neighborColors = ['red'];
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'red');
+
+  neighborColors = ['blue', 'white'];
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'blue');
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'white');
+
+  neighborColors = ['black', 'yellow', 'red'];
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'black');
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'yellow');
+  assertTrue(findSuitableColor(availableColors, neighborColors) !== 'red');
+
+  neighborColors = ['black', 'yellow', 'red', 'blue'];
+  assertTrue(findSuitableColor(availableColors, neighborColors) === 'white');
+}
+
 
 function runTests() {
   getLargestSpanTest();
   spanIsNeighborTest();
+  findSuitableColorTest();
 }
 
 runTests();

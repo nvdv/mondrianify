@@ -128,10 +128,6 @@ class Tree2D {
   getNeighborSpans(span: Span): Array<Span> {
     return this.getChildrenSpans().filter(s => s.isNeighbor(span));
   }
-
-  getNeighborSpansNoColor(span: Span): Array<Span> {
-    return this.getNeighborSpans(span).filter(s => !s.color);
-  }
 }
 
 function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
@@ -165,6 +161,23 @@ const RED_TILE_RATIO = 0.07;
 const BLUE_TILE_RATIO = 0.07;
 const YELLOW_TILE_RATIO = 0.07;
 const BLACK_TILE_RATIO = 0.05;
+
+function findSuitableColor(availColors: Array<string>,
+                           neighborColors: Array<string>): string {
+  let comparator = (a, b) => {
+    let aPos = neighborColors.indexOf(a);
+    let bPos = neighborColors.indexOf(b);
+    if (aPos === -1) {
+      return -1;
+    }
+    if (bPos === -1) {
+      return 1;
+    }
+    return aPos - bPos;
+  }
+  availColors.sort(comparator);
+  return availColors[0];
+}
 
 function colorizeTree(tree: Tree2D) {
   let childrenSpans = tree.getChildrenSpans();
@@ -200,11 +213,11 @@ function colorizeTree(tree: Tree2D) {
   };
 
   shuffleArray(availableColors);
-  let i = 0;
   for (let span of childrenSpans) {
-    span.color = availableColors[i];
-    i++;
+    let neighborColors = tree.getNeighborSpans(span).map(s => s.color);
+    span.color = findSuitableColor(availableColors, neighborColors);
+    availableColors.shift();
   }
 }
 
-export { Span, Point, Tree2D, createTree, colorizeTree };
+export { Span, Point, Tree2D, createTree, colorizeTree, findSuitableColor };
