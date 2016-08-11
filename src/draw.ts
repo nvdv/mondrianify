@@ -1,3 +1,6 @@
+/**
+ * Various drawing functions.
+ */
 import { Span, Tree2D, createTree, colorizeTree } from './canvas_objects';
 
 const FRAME_LINE_WIDTH = 10;
@@ -6,6 +9,11 @@ const NORMAL_LINE_WIDTH = 2;
 const NUM_POINTS = 15;
 const SCALE_COEFF = 3;
 
+/**
+ * Draws canvas and tile frames.
+ * @param context Drawing context.
+ * @param picture Internal picture representation.
+ */
 function drawFrames(context, picture) {
   context.lineWidth = FRAME_LINE_WIDTH;
   context.stokeStyle = FRAME_LINE_COLOR;
@@ -25,6 +33,11 @@ function drawFrames(context, picture) {
   }
 }
 
+/**
+ * Draws color tiles.
+ * @param context Drawing context.
+ * @param picture Internal picture representation.
+ */
 function drawTiles(context, picture) {
   for (let currSpan of picture.getChildrenSpans()) {
     context.fillStyle = currSpan.color;
@@ -36,6 +49,10 @@ function drawTiles(context, picture) {
   }
 }
 
+/**
+ * Draws final picture.
+ * @param canvas Drawing canvas.
+ */
 function draw(canvas) {
   let context = canvas.getContext('2d');
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
@@ -46,6 +63,9 @@ function draw(canvas) {
   drawFrames(context, picture);
 }
 
+/**
+ * Main function.
+ */
 function main() {
   let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
   canvas.width = 0.5 * document.body.clientWidth;
