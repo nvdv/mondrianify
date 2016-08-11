@@ -11,8 +11,8 @@ const SCALE_COEFF = 3;
 
 /**
  * Draws canvas and tile frames.
- * @param context Drawing context.
- * @param picture Internal picture representation.
+ * @param context - Drawing context.
+ * @param picture - Internal picture representation.
  */
 function drawFrames(context, picture) {
   context.lineWidth = FRAME_LINE_WIDTH;
@@ -35,8 +35,8 @@ function drawFrames(context, picture) {
 
 /**
  * Draws color tiles.
- * @param context Drawing context.
- * @param picture Internal picture representation.
+ * @param context - Drawing context.
+ * @param picture - Internal picture representation.
  */
 function drawTiles(context, picture) {
   for (let currSpan of picture.getChildrenSpans()) {
@@ -51,7 +51,7 @@ function drawTiles(context, picture) {
 
 /**
  * Draws final picture.
- * @param canvas Drawing canvas.
+ * @param canvas - Drawing canvas.
  */
 function draw(canvas) {
   let context = canvas.getContext('2d');

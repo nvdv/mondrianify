@@ -1,3 +1,14 @@
+/**
+ * Picture representation and related functions..
+ */
+
+ /**
+  * Checks whether segments intersect.
+  * @param s1 - Start of 1st segment
+  * @param e1 - End of 1st segment
+  * @param s2 - Start of 2nd segment
+  * @param e2 - End of 2nd segment
+  */
 function segmentsIntersect(s1: number, e1: number, s2: number, e2: number): boolean {
   if (s2 >= s1 && s2 <= e1 || e2 >= s1 && e2 <= e1) {
     return true;
@@ -8,7 +19,9 @@ function segmentsIntersect(s1: number, e1: number, s2: number, e2: number): bool
   return false;
 }
 
-// Represents rectangle in 2D space.
+/**
+ * Represents single tile on picture.
+ */
 class Span {
   color: string;
   area: number;
@@ -44,15 +57,22 @@ class Span {
   }
 }
 
-// Represents point in 2D space.
+/**
+ * Represents point in 2D space.
+ */
 class Point {
   constructor(public x: number, public y: number) {
   }
 }
 
+/**
+ * Represents axis.
+ */
 enum Axis { X, Y }
 
-// Represents 2D tree node.
+/**
+ * Represents 2d tree node.
+ */
 class TreeNode{
   leftChild: TreeNode;
   rightChild: TreeNode;
@@ -61,12 +81,17 @@ class TreeNode{
   }
 }
 
-// Represents 2D tree on canvas.
+/**
+ * Represents 2D tree.
+ */
 class Tree2D {
   private root: TreeNode;
   constructor(public canvasSpan: Span) {
   }
 
+  /**
+   * Handles tree node insertion.
+   */
   private insertNode(p: Point, currNode: TreeNode, axis: Axis, nodeSpan: Span) {
     if (!currNode) {
       let leftSpan: Span, rightSpan: Span;
@@ -99,10 +124,16 @@ class Tree2D {
     return currNode;
   }
 
+  /**
+   * Inserts point into the tree.
+   */
   insert(p: Point) {
     this.root = this.insertNode(p, this.root, Axis.X, this.canvasSpan);
   }
 
+  /**
+   * Returns all leaf-level spans.
+   */
   getChildrenSpans(): Array<Span> {
     var result: Span[] = [];
     let spansInOrder = (node: TreeNode) => {
@@ -121,15 +152,27 @@ class Tree2D {
     return result;
   }
 
+  /**
+   * Returns largest leaf-level span.
+   */
   getLargestChildSpan(): Span {
     return this.getChildrenSpans().reduce((a, b) => a.area > b.area ? a : b);
   }
 
+  /**
+   * Returns neighbor spans for specified span.
+   */
   getNeighborSpans(span: Span): Array<Span> {
     return this.getChildrenSpans().filter(s => s.isNeighbor(span));
   }
 }
 
+/**
+ * Generates 2D tree on canvas specified by canvasSpan.
+ * @param canvasSpan - Span that specifies canvas size
+ * @param numPoints - Number of bisecting points in 2D tree.
+ * @param scaleK - Scale coefficient.
+ */
 function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
   let getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -162,6 +205,11 @@ const BLUE_TILE_RATIO = 0.07;
 const YELLOW_TILE_RATIO = 0.07;
 const BLACK_TILE_RATIO = 0.05;
 
+/**
+ * Calculates current tile color..
+ * @param availColors - An array with available colors.
+ * @param neighborColors - An array of neighboring tiles colors.
+ */
 function findSuitableColor(availColors: Array<string>,
                            neighborColors: Array<string>): string {
   let comparator = (a, b) => {
@@ -179,6 +227,10 @@ function findSuitableColor(availColors: Array<string>,
   return availColors[0];
 }
 
+/**
+ * Assigns colors to tiles
+ * @param tree - 2D tree that representing picture.
+ */
 function colorizeTree(tree: Tree2D) {
   let childrenSpans = tree.getChildrenSpans();
   let numTiles = childrenSpans.length;
