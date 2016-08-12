@@ -3,6 +3,8 @@
  */
 import { Span, Tree2D, createTree, colorizeTree } from './canvas_objects';
 
+const WIDTH_SCALE = 0.5;
+const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
 const FRAME_LINE_COLOR = 'black';
 const NORMAL_LINE_WIDTH = 2;
@@ -68,8 +70,8 @@ function draw(canvas) {
  */
 function main() {
   let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
-  canvas.width = 0.5 * document.body.clientWidth;
-  canvas.height = 0.95 * document.body.clientHeight;
+  canvas.width = WIDTH_SCALE * document.body.clientWidth;
+  canvas.height = HEIGHT_SCALE * document.body.clientHeight;
   canvas.addEventListener('click', (_) => draw(canvas));
   draw(canvas);
 };
