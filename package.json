@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "browserify src/draw.ts -p [ tsify --debug ] > build/draw.js",
-    "test": "tsc src/test/canvas_objects_test.ts && node src/test/canvas_objects_test.js"
+    "test": "tsc --outDir build src/test/canvas_objects_test.ts && node build/test/canvas_objects_test.js"
   },
   "license": "BSD-2-Clause",
   "repository" : {
