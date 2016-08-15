@@ -30,6 +30,19 @@ function assertTrue(op1) {
   }
 }
 
+function assertArrayOfObjectsEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    throw new Error(
+      JSON.stringify(arr1) + ' is not equal to ' + JSON.stringify(arr2));
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (!isEqual(arr1[i], arr2[i])) {
+      throw new Error(
+        JSON.stringify(arr1) + ' is not equal to ' + JSON.stringify(arr2));
+    }
+  }
+}
+
 function spanIsNeighborTest() {
   let span = new Span(10, 50, 20, 60);
   assertTrue(span.isNeighbor(new Span(0, 10, 30, 50)));
@@ -49,6 +62,65 @@ function spanIsNeighborTest() {
   assertTrue(!span.isNeighbor(new Span(100, 120, 10, 20)));
 
   assertTrue(!span.isNeighbor(new Span(70, 90, 50, 80)));
+}
+
+function getChildrenSpansTest() {
+  let span = new Span(0, 100, 0, 100);
+  let tree = new Tree2D(span);
+  tree.insert(new Point(50, 50));
+  tree.insert(new Point(20, 20));
+  tree.insert(new Point(80, 80));
+  tree.insert(new Point(70, 70));
+
+  assertArrayOfObjectsEqual(tree.getChildrenSpans(),
+                            [new Span(0, 50, 0, 20),
+                             new Span(0, 50, 20, 100),
+                             new Span(50, 70, 0, 80),
+                             new Span(70, 100, 0, 80),
+                             new Span(50, 100, 80, 100)]);
+}
+
+function getNeighborTest() {
+  let span = new Span(0, 100, 0, 100);
+  let tree = new Tree2D(span);
+  tree.insert(new Point(50, 50));
+  tree.insert(new Point(20, 20));
+  tree.insert(new Point(80, 80));
+  tree.insert(new Point(70, 70));
+
+  assertArrayOfObjectsEqual(
+    tree.getNeighborSpans(new Span(0, 50, 0, 20)),
+    [new Span(0, 50, 20, 100),
+     new Span(50, 70, 0, 80)]
+  );
+
+  assertArrayOfObjectsEqual(
+    tree.getNeighborSpans(new Span(0, 50, 20, 100)),
+    [new Span(0, 50, 0, 20),
+     new Span(50, 70, 0, 80),
+     new Span(50, 100, 80, 100)]
+  );
+
+  assertArrayOfObjectsEqual(
+    tree.getNeighborSpans(new Span(50, 70, 0, 80)),
+    [new Span(0, 50, 0, 20),
+     new Span(0, 50, 20, 100),
+     new Span(70, 100, 0, 80),
+     new Span(50, 100, 80, 100)]
+  );
+
+  assertArrayOfObjectsEqual(
+    tree.getNeighborSpans(new Span(70, 100, 0, 80)),
+    [new Span(50, 70, 0, 80),
+     new Span(50, 100, 80, 100)]
+  );
+
+  assertArrayOfObjectsEqual(
+    tree.getNeighborSpans(new Span(50, 100, 80, 100)),
+    [new Span(0, 50, 20, 100),
+     new Span(50, 70, 0, 80),
+     new Span(70, 100, 0, 80)]
+  );
 }
 
 function getLargestSpanTest() {
@@ -87,10 +159,11 @@ function findSuitableColorTest() {
   assertTrue(findSuitableColor(availableColors, neighborColors) === 'white');
 }
 
-
 function runTests() {
   getLargestSpanTest();
   spanIsNeighborTest();
+  getChildrenSpansTest();
+  getNeighborTest();
   findSuitableColorTest();
 }
 
