@@ -8,8 +8,8 @@ const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
 const FRAME_LINE_COLOR = 'black';
 const NORMAL_LINE_WIDTH = 2;
-const NUM_POINTS = 15;
-const SCALE_COEFF = 3;
+const NUM_POINTS = 75;
+const SCALE_COEFF = 5;
 
 /**
  * Draws canvas and tile frames.

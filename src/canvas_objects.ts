@@ -200,32 +200,13 @@ const YELLOW_COLOR = '#FFF700';
 const BLUE_COLOR = '#0038A8';
 const BLACK_COLOR = '#000000';
 
-const RED_TILE_RATIO = 0.07;
+const RED_TILE_RATIO = 0.08;
 const BLUE_TILE_RATIO = 0.07;
-const YELLOW_TILE_RATIO = 0.07;
-const BLACK_TILE_RATIO = 0.05;
+const YELLOW_TILE_RATIO = 0.08;
+const BLACK_TILE_RATIO = 0.03;
 
-/**
- * Calculates current tile color..
- * @param availColors - An array with available colors.
- * @param neighborColors - An array of neighboring tiles colors.
- */
-function findSuitableColor(availColors: Array<string>,
-                           neighborColors: Array<string>): string {
-  let comparator = (a, b) => {
-    let aPos = neighborColors.indexOf(a);
-    let bPos = neighborColors.indexOf(b);
-    if (aPos === -1) {
-      return -1;
-    }
-    if (bPos === -1) {
-      return 1;
-    }
-    return aPos - bPos;
-  }
-  availColors.sort(comparator);
-  return availColors[0];
-}
+const MIN_WHITE_NEIGHBORS = 3;
+const MAX_ATTEMPTS = 2;
 
 /**
  * Assigns colors to tiles
@@ -264,12 +245,36 @@ function colorizeTree(tree: Tree2D) {
      }
   };
 
+  let count = (arr, el) => {
+    let counter = 0;
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] == el) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  let isColoringGood = (span: Span, color: string): boolean => {
+    let neighborColors = tree.getNeighborSpans(span).map(s => s.color);
+    // Since there are more white tiles, we want special handling for white.
+    return (color === WHITE_COLOR &&
+            count(neighborColors, WHITE_COLOR) < MIN_WHITE_NEIGHBORS) ||
+           neighborColors.indexOf(color) == -1;
+  }
+
   shuffleArray(availableColors);
   for (let span of childrenSpans) {
-    let neighborColors = tree.getNeighborSpans(span).map(s => s.color);
-    span.color = findSuitableColor(availableColors, neighborColors);
+    for (let n = 0; n < MAX_ATTEMPTS; n++) {
+      if (isColoringGood(span, availableColors[0])) {
+        span.color = availableColors[0];
+        break
+      } else {
+        shuffleArray(availableColors);
+      }
+    }
     availableColors.shift();
   }
 }
 
-export { Span, Point, Tree2D, createTree, colorizeTree, findSuitableColor };
+export { Span, Point, Tree2D, createTree, colorizeTree };
