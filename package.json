@@ -4,10 +4,12 @@
   "dependencies": {
     "typescript": "1.8.10",
     "browserify": "13.0.1",
-    "tsify": "1.0.1"
+    "tsify": "1.0.1",
+    "tslint": "3.14.0"
   },
   "scripts": {
     "build": "browserify src/draw.ts -p [ tsify --debug ] > build/draw.js",
+    "lint": "tslint src/*.ts src/test/*.ts",
     "test": "tsc --outDir build src/test/canvas_objects_test.ts && node build/test/canvas_objects_test.js"
   },
   "license": "BSD-2-Clause",

@@ -1,12 +1,12 @@
 /**
  * Various drawing functions.
  */
-import { Span, Tree2D, createTree, colorizeTree } from './canvas_objects';
+import { Span, Tree2D, createTree, colorizeTree } from "./canvas_objects";
 
 const WIDTH_SCALE = 0.5;
 const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
-const FRAME_LINE_COLOR = 'black';
+const FRAME_LINE_COLOR = "black";
 const NORMAL_LINE_WIDTH = 2;
 const NUM_POINTS = 75;
 const SCALE_COEFF = 5;
@@ -56,7 +56,7 @@ function drawTiles(context, picture) {
  * @param canvas - Drawing canvas.
  */
 function draw(canvas) {
-  let context = canvas.getContext('2d');
+  let context = canvas.getContext("2d");
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
   let picture = createTree(canvasSpan, NUM_POINTS, SCALE_COEFF);
 
@@ -69,10 +69,10 @@ function draw(canvas) {
  * Main function.
  */
 function main() {
-  let canvas = <HTMLCanvasElement> document.getElementById('currCanvas');
+  let canvas = <HTMLCanvasElement> document.getElementById("currCanvas");
   canvas.width = WIDTH_SCALE * document.body.clientWidth;
   canvas.height = HEIGHT_SCALE * document.body.clientHeight;
-  canvas.addEventListener('click', (_) => draw(canvas));
+  canvas.addEventListener("click", (_) => draw(canvas));
   draw(canvas);
 };
 

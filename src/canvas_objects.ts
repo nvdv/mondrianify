@@ -73,7 +73,7 @@ enum Axis { X, Y }
 /**
  * Represents 2d tree node.
  */
-class TreeNode{
+class TreeNode {
   leftChild: TreeNode;
   rightChild: TreeNode;
   constructor(public point: Point, public axis: Axis,
@@ -95,7 +95,7 @@ class Tree2D {
   private insertNode(p: Point, currNode: TreeNode, axis: Axis, nodeSpan: Span) {
     if (!currNode) {
       let leftSpan: Span, rightSpan: Span;
-      if (axis == Axis.X) {
+      if (axis === Axis.X) {
         leftSpan = new Span(nodeSpan.xmin, p.x, nodeSpan.ymin, nodeSpan.ymax);
         rightSpan = new Span(p.x, nodeSpan.xmax, nodeSpan.ymin, nodeSpan.ymax);
       } else {
@@ -104,7 +104,7 @@ class Tree2D {
       }
       return new TreeNode(p, axis, rightSpan, leftSpan);
     }
-    if (axis == Axis.X) {
+    if (axis === Axis.X) {
       if (p.x < currNode.point.x) {
         currNode.leftChild = this.insertNode(
             p, currNode.leftChild, Axis.Y, currNode.leftSpan);
@@ -135,7 +135,7 @@ class Tree2D {
    * Returns all leaf-level spans.
    */
   getChildrenSpans(): Array<Span> {
-    var result: Span[] = [];
+    let result: Span[] = [];
     let spansInOrder = (node: TreeNode) => {
       if (node) {
         spansInOrder(node.leftChild);
@@ -176,11 +176,11 @@ class Tree2D {
 function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
   let getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
-  }
+  };
 
   let canvas = new Tree2D(canvasSpan);
-  var xRand = getRandomInt(canvasSpan.xmin, canvasSpan.xmax);
-  var yRand = getRandomInt(canvasSpan.ymin, canvasSpan.ymax);
+  let xRand = getRandomInt(canvasSpan.xmin, canvasSpan.xmax);
+  let yRand = getRandomInt(canvasSpan.ymin, canvasSpan.ymax);
   canvas.insert(new Point(xRand, yRand));
   for (let i = 0; i < numPoints - 1; i++) {
     let largestSpan = canvas.getLargestChildSpan();
@@ -194,11 +194,11 @@ function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D
   return canvas;
 }
 
-const WHITE_COLOR = '#FFFFFF';
-const RED_COLOR = '#C80815';
-const YELLOW_COLOR = '#FFF700';
-const BLUE_COLOR = '#0038A8';
-const BLACK_COLOR = '#000000';
+const WHITE_COLOR = "#FFFFFF";
+const RED_COLOR = "#C80815";
+const YELLOW_COLOR = "#FFF700";
+const BLUE_COLOR = "#0038A8";
+const BLACK_COLOR = "#000000";
 
 const RED_TILE_RATIO = 0.08;
 const BLUE_TILE_RATIO = 0.07;
@@ -228,7 +228,7 @@ function colorizeTree(tree: Tree2D) {
       output.push(e);
     }
     return output;
-  }
+  };
 
   let availableColors = [].concat(arrayRepeat(WHITE_COLOR, numWhiteTiles))
     .concat(arrayRepeat(RED_COLOR, numRedTiles))
@@ -247,28 +247,28 @@ function colorizeTree(tree: Tree2D) {
 
   let count = (arr, el) => {
     let counter = 0;
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] == el) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === el) {
         counter++;
       }
     }
     return counter;
-  }
+  };
 
   let isColoringGood = (span: Span, color: string): boolean => {
     let neighborColors = tree.getNeighborSpans(span).map(s => s.color);
     // Since there are more white tiles, we want special handling for white.
     return (color === WHITE_COLOR &&
             count(neighborColors, WHITE_COLOR) < MIN_WHITE_NEIGHBORS) ||
-           neighborColors.indexOf(color) == -1;
-  }
+           neighborColors.indexOf(color) === -1;
+  };
 
   shuffleArray(availableColors);
   for (let span of childrenSpans) {
     for (let n = 0; n < MAX_ATTEMPTS; n++) {
       if (isColoringGood(span, availableColors[0])) {
         span.color = availableColors[0];
-        break
+        break;
       } else {
         shuffleArray(availableColors);
       }

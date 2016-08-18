@@ -1,15 +1,15 @@
 import { Span, Point, Tree2D } from "../canvas_objects";
 
 function isEqual(a, b) {
-  var aProps = Object.getOwnPropertyNames(a);
-  var bProps = Object.getOwnPropertyNames(b);
+  let aProps = Object.getOwnPropertyNames(a);
+  let bProps = Object.getOwnPropertyNames(b);
 
-  if (aProps.length != bProps.length) {
+  if (aProps.length !== bProps.length) {
     return false;
   }
 
-  for (var i = 0; i < aProps.length; i++) {
-    var propName = aProps[i];
+  for (let i = 0; i < aProps.length; i++) {
+    let propName = aProps[i];
     if (a[propName] !== b[propName]) {
       return false;
     }
@@ -20,25 +20,25 @@ function isEqual(a, b) {
 function assertEqual(op1, op2) {
   if (!isEqual(op1, op2)) {
     throw new Error(
-      JSON.stringify(op1) + ' is not equal to ' + JSON.stringify(op2));
+      JSON.stringify(op1) + " is not equal to " + JSON.stringify(op2));
   }
 }
 
 function assertTrue(op1) {
   if (!op1) {
-    throw new Error(JSON.stringify(op1) + ' is not true ');
+    throw new Error(JSON.stringify(op1) + " is not true ");
   }
 }
 
 function assertArrayOfObjectsEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
     throw new Error(
-      JSON.stringify(arr1) + ' is not equal to ' + JSON.stringify(arr2));
+      JSON.stringify(arr1) + " is not equal to " + JSON.stringify(arr2));
   }
   for (let i = 0; i < arr1.length; i++) {
     if (!isEqual(arr1[i], arr2[i])) {
       throw new Error(
-        JSON.stringify(arr1) + ' is not equal to ' + JSON.stringify(arr2));
+        JSON.stringify(arr1) + " is not equal to " + JSON.stringify(arr2));
     }
   }
 }
