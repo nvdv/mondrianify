@@ -3,7 +3,7 @@
  */
 import { Span, Tree2D, createTree, colorizeTree } from "./canvas_objects";
 
-const WIDTH_SCALE = 0.5;
+const WIDTH_SCALE = 0.95;
 const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
 const FRAME_LINE_COLOR = "black";
