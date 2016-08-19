@@ -174,7 +174,7 @@ class Tree2D {
  * @param scaleK - Scale coefficient.
  */
 function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
-  let getRandomInt = (min: number, max: number) => {
+  let getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 

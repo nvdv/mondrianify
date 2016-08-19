@@ -8,8 +8,8 @@ const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
 const FRAME_LINE_COLOR = "black";
 const NORMAL_LINE_WIDTH = 2;
-const NUM_POINTS = 75;
-const SCALE_COEFF = 5;
+const NUM_POINTS_RANGE = [50, 100];
+const SCALE_COEFF_RANGE = [3, 5];
 
 /**
  * Draws canvas and tile frames.
@@ -58,7 +58,12 @@ function drawTiles(context, picture) {
 function draw(canvas) {
   let context = canvas.getContext("2d");
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
-  let picture = createTree(canvasSpan, NUM_POINTS, SCALE_COEFF);
+  let getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+  let picture = createTree(canvasSpan,
+                           getRandomInt(NUM_POINTS_RANGE[0], NUM_POINTS_RANGE[1]),
+                           getRandomInt(SCALE_COEFF_RANGE[0], SCALE_COEFF_RANGE[1]));
 
   colorizeTree(picture);
   drawTiles(context, picture);
