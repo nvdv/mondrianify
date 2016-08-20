@@ -1,5 +1,5 @@
 # mondrianify
-`nomdrianify` is an experiment of generating random [Mondrian](https://en.wikipedia.org/wiki/Piet_Mondrian)-like tiles using web technologies.
+`nomdrianify` is an experiment of generating random [Mondrian](https://en.wikipedia.org/wiki/Piet_Mondrian)-like tiles using web technologies. Live demo is [here](https://nvdv.github.io/mondrianify/).
 
 ![tiles](http://i.imgur.com/9noOoz6.png)
 
