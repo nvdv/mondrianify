@@ -1,27 +1,12 @@
-@media (min-width: 320px) {
-  #currCanvas {
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0;
-    padding-right: 0;
-    width: 95%;
-    height: 95%;
-  }
-}
-
-@media (min-width : 1024px) {
-  #currCanvas {
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0;
-    padding-right: 0;
-    width: 50%;
-    height: 95%;
-  }
+#currCanvas {
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+  width: 95%;
+  height: 95%;
 }
 
 #note {
