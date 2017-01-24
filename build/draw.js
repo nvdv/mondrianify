@@ -279,9 +279,9 @@ var WIDTH_SCALE = 0.95;
 var HEIGHT_SCALE = 0.95;
 var FRAME_LINE_WIDTH = 10;
 var FRAME_LINE_COLOR = "black";
-var NORMAL_LINE_WIDTH = 2;
+var NORMAL_LINE_WIDTH = 1;
 var NUM_POINTS_RANGE = [50, 100];
-var SCALE_COEFF_RANGE = [3, 5];
+var SCALE_COEFF_RANGE = [5, 8];
 /**
  * Draws canvas and tile frames.
  * @param context - Drawing context.
