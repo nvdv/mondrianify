@@ -39,21 +39,21 @@ class Span {
         this.ymin === s.ymin && this.ymax === s.ymax) {
       return false;
     }
-    // Do side checking,
-    if (this.xmin === s.xmax && segmentsIntersect(this.ymin, this.ymax,
-                                                  s.ymin, s.ymax)) {
+    // Check sides
+    if (this.xmin === s.xmax &&
+        segmentsIntersect(this.ymin, this.ymax, s.ymin, s.ymax)) {
       return true;
     }
-    if (this.ymax === s.ymin && segmentsIntersect(this.xmin, this.xmax,
-                                                  s.xmin, s.xmax)) {
+    if (this.ymax === s.ymin &&
+        segmentsIntersect(this.xmin, this.xmax, s.xmin, s.xmax)) {
       return true;
     }
-    if (this.xmax === s.xmin && segmentsIntersect(this.ymin, this.ymax,
-                                                   s.ymin, s.ymax)) {
+    if (this.xmax === s.xmin &&
+        segmentsIntersect(this.ymin, this.ymax, s.ymin, s.ymax)) {
       return true;
     }
-    if (this.ymin === s.ymax && segmentsIntersect(this.xmin, this.xmax,
-                                                  s.xmin, s.xmax)) {
+    if (this.ymin === s.ymax &&
+        segmentsIntersect(this.xmin, this.xmax, s.xmin, s.xmax)) {
       return true;
     }
     return false;

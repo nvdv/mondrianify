@@ -8,7 +8,7 @@ const HEIGHT_SCALE = 0.95;
 const FRAME_LINE_WIDTH = 10;
 const FRAME_LINE_COLOR = "black";
 const NORMAL_LINE_WIDTH = 1;
-const NUM_POINTS_RANGE = [50, 100];
+const NUM_POINTS_RANGE = [30, 60];
 const SCALE_COEFF_RANGE = [5, 8];
 
 /**
