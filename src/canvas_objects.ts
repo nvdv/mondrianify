@@ -9,7 +9,10 @@
   * @param s2 - Start of 2nd segment
   * @param e2 - End of 2nd segment
   */
-function segmentsIntersect(s1: number, e1: number, s2: number, e2: number): boolean {
+function segmentsIntersect(s1: number,
+                           e1: number,
+                           s2: number,
+                           e2: number): boolean {
   if (s2 >= s1 && s2 <= e1 || e2 >= s1 && e2 <= e1) {
     return true;
   }
@@ -173,7 +176,9 @@ class Tree2D {
  * @param numPoints - Number of bisecting points in 2D tree.
  * @param scaleK - Scale coefficient.
  */
-function createTree(canvasSpan: Span, numPoints: number, scaleK: number): Tree2D {
+function createTree(canvasSpan: Span,
+                    numPoints: number,
+                    scaleK: number): Tree2D {
   let getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };

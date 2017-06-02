@@ -62,8 +62,10 @@ function draw(canvas) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
   let picture = createTree(canvasSpan,
-                           getRandomInt(NUM_POINTS_RANGE[0], NUM_POINTS_RANGE[1]),
-                           getRandomInt(SCALE_COEFF_RANGE[0], SCALE_COEFF_RANGE[1]));
+                           getRandomInt(NUM_POINTS_RANGE[0],
+                                        NUM_POINTS_RANGE[1]),
+                           getRandomInt(SCALE_COEFF_RANGE[0],
+                                        SCALE_COEFF_RANGE[1]));
 
   colorizeTree(picture);
   drawTiles(context, picture);
