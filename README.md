@@ -1,7 +1,8 @@
 # mondrianify
-`mondrianify` is an experiment of generating random [Mondrian](https://en.wikipedia.org/wiki/Piet_Mondrian)-like tiles using web technologies. Live demo is [here](https://nvdv.github.io/mondrianify/).
+`mondrianify` is an experiment of generating random [Mondrian](https://en.wikipedia.org/wiki/Piet_Mondrian) tiles using web technologies.
+Live demo is [here](https://nvdv.github.io/mondrianify/).
 
-![tiles](http://i.imgur.com/9noOoz6.png)
+![tiles](http://i.imgur.com/eh4RSjR.png)
 
 ## Usage
 Clone this repository and run
