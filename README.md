@@ -7,7 +7,7 @@ Live demo is [here](https://nvdv.github.io/mondrianify/).
 ## Usage
 Clone this repository and run
 ```sh
-npm run build && open mondrianify.html
+npm run build && open index.html
 ```
 
 ## Testing
