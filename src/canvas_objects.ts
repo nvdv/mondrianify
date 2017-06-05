@@ -180,7 +180,7 @@ function createTree(canvasSpan: Span,
                     numPoints: number,
                     scaleK: number): Tree2D {
   let getRandomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min)) + Math.floor(min);
   };
 
   let canvas = new Tree2D(canvasSpan);
