@@ -5,18 +5,19 @@ Live demo is [here](https://nvdv.github.io/mondrianify/).
 ![tiles](https://i.imgur.com/QrIUc4a.png)
 
 ## Usage
-Clone this repository and run
+Clone this repository, and run
 ```sh
-npm run build && open index.html
+npm install
+npm run build
+python3 -m http.server 8000
 ```
+Then open `http://localhost:8000` in your browser.
 
-## Testing
+## Testing & Linting
 ```sh
 npm run test
+npm run lint
 ```
-
-## Dependencies
-All `npm` module dependencies are listed in `package.json`.
 
 ## License
 
