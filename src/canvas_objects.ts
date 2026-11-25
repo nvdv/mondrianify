@@ -95,8 +95,11 @@ class Tree2D {
   /**
    * Handles tree node insertion.
    */
-  private insertNode(p: Point, currNode: TreeNode | undefined, axis: Axis, nodeSpan: Span): TreeNode {
+  private insertNode(p: Point, currNode: TreeNode | undefined, nodeSpan: Span): TreeNode {
     if (!currNode) {
+      let dx = nodeSpan.xmax - nodeSpan.xmin;
+      let dy = nodeSpan.ymax - nodeSpan.ymin;
+      let axis = dx >= dy ? Axis.X : Axis.Y;
       let leftSpan: Span, rightSpan: Span;
       if (axis === Axis.X) {
         leftSpan = new Span(nodeSpan.xmin, p.x, nodeSpan.ymin, nodeSpan.ymax);
@@ -107,21 +110,21 @@ class Tree2D {
       }
       return new TreeNode(p, axis, rightSpan, leftSpan);
     }
-    if (axis === Axis.X) {
+    if (currNode.axis === Axis.X) {
       if (p.x < currNode.point.x) {
         currNode.leftChild = this.insertNode(
-            p, currNode.leftChild, Axis.Y, currNode.leftSpan);
+            p, currNode.leftChild, currNode.leftSpan);
       } else {
         currNode.rightChild = this.insertNode(
-          p, currNode.rightChild, Axis.Y, currNode.rightSpan);
+          p, currNode.rightChild, currNode.rightSpan);
       }
     } else {
       if (p.y < currNode.point.y) {
         currNode.leftChild = this.insertNode(
-            p, currNode.leftChild, Axis.X, currNode.leftSpan);
+            p, currNode.leftChild, currNode.leftSpan);
       } else {
         currNode.rightChild = this.insertNode(
-            p, currNode.rightChild, Axis.X, currNode.rightSpan);
+            p, currNode.rightChild, currNode.rightSpan);
       }
     }
     return currNode;
@@ -131,7 +134,7 @@ class Tree2D {
    * Inserts point into the tree.
    */
   insert(p: Point) {
-    this.root = this.insertNode(p, this.root, Axis.X, this.canvasSpan);
+    this.root = this.insertNode(p, this.root, this.canvasSpan);
   }
 
   /**
@@ -163,6 +166,23 @@ class Tree2D {
   }
 
   /**
+   * Returns a leaf-level span chosen randomly with probability proportional to area.
+   */
+  getWeightedRandomChildSpan(): Span {
+    let spans = this.getChildrenSpans();
+    let totalArea = spans.reduce((sum, s) => sum + s.area, 0);
+    let threshold = Math.random() * totalArea;
+    let cumulative = 0;
+    for (let span of spans) {
+      cumulative += span.area;
+      if (cumulative >= threshold) {
+        return span;
+      }
+    }
+    return spans[spans.length - 1];
+  }
+
+  /**
    * Returns neighbor spans for specified span.
    */
   getNeighborSpans(span: Span): Array<Span> {
@@ -188,22 +208,22 @@ function createTree(canvasSpan: Span,
   let yRand = getRandomInt(canvasSpan.ymin, canvasSpan.ymax);
   canvas.insert(new Point(xRand, yRand));
   for (let i = 0; i < numPoints - 1; i++) {
-    let largestSpan = canvas.getLargestChildSpan();
-    let dx = largestSpan.xmax - largestSpan.xmin;
-    let dy = largestSpan.ymax - largestSpan.ymin;
+    let targetSpan = canvas.getWeightedRandomChildSpan();
+    let dx = targetSpan.xmax - targetSpan.xmin;
+    let dy = targetSpan.ymax - targetSpan.ymin;
     let rx = dx / scaleK, ry = dy / scaleK;
-    xRand = getRandomInt(largestSpan.xmin + rx , largestSpan.xmax - rx);
-    yRand = getRandomInt(largestSpan.ymin + ry , largestSpan.ymax - ry);
+    xRand = getRandomInt(targetSpan.xmin + rx , targetSpan.xmax - rx);
+    yRand = getRandomInt(targetSpan.ymin + ry , targetSpan.ymax - ry);
     canvas.insert(new Point(xRand, yRand));
   }
   return canvas;
 }
 
-const WHITE_COLOR = "#FFFFFF";
+const WHITE_COLOR = "#F7F5EE";
 const RED_COLOR = "#C80815";
-const YELLOW_COLOR = "#FFF700";
+const YELLOW_COLOR = "#F5D000";
 const BLUE_COLOR = "#0038A8";
-const BLACK_COLOR = "#000000";
+const BLACK_COLOR = "#1A1A1A";
 
 const RED_TILE_RATIO = 0.08;
 const BLUE_TILE_RATIO = 0.07;

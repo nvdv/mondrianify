@@ -6,9 +6,9 @@ import { Span, Tree2D, createTree, colorizeTree } from "./canvas_objects.js";
 const WIDTH_SCALE = 2;
 const HEIGHT_SCALE = 2;
 const FRAME_LINE_WIDTH = 10;
-const FRAME_LINE_COLOR = "black";
-const NORMAL_LINE_WIDTH = 1.5;
-const NUM_POINTS_RANGE = [4500, 5000];
+const FRAME_LINE_COLOR = "#1A1A1A";
+const NORMAL_LINE_WIDTH = 8;
+const NUM_POINTS_RANGE = [40, 80];
 const SCALE_COEFF_RANGE = [3, 5];
 
 /**

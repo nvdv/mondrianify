@@ -77,8 +77,8 @@ function getChildrenSpansTest() {
   assertArrayOfObjectsEqual(tree.getChildrenSpans(),
                             [new Span(0, 50, 0, 20),
                              new Span(0, 50, 20, 100),
-                             new Span(50, 70, 0, 80),
-                             new Span(70, 100, 0, 80),
+                             new Span(50, 100, 0, 70),
+                             new Span(50, 100, 70, 80),
                              new Span(50, 100, 80, 100)]);
 }
 
@@ -93,35 +93,35 @@ function getNeighborTest() {
   assertArrayOfObjectsEqual(
     tree.getNeighborSpans(new Span(0, 50, 0, 20)),
     [new Span(0, 50, 20, 100),
-     new Span(50, 70, 0, 80)]
+     new Span(50, 100, 0, 70)]
   );
 
   assertArrayOfObjectsEqual(
     tree.getNeighborSpans(new Span(0, 50, 20, 100)),
     [new Span(0, 50, 0, 20),
-     new Span(50, 70, 0, 80),
+     new Span(50, 100, 0, 70),
+     new Span(50, 100, 70, 80),
      new Span(50, 100, 80, 100)]
   );
 
   assertArrayOfObjectsEqual(
-    tree.getNeighborSpans(new Span(50, 70, 0, 80)),
+    tree.getNeighborSpans(new Span(50, 100, 0, 70)),
     [new Span(0, 50, 0, 20),
      new Span(0, 50, 20, 100),
-     new Span(70, 100, 0, 80),
-     new Span(50, 100, 80, 100)]
+     new Span(50, 100, 70, 80)]
   );
 
   assertArrayOfObjectsEqual(
-    tree.getNeighborSpans(new Span(70, 100, 0, 80)),
-    [new Span(50, 70, 0, 80),
+    tree.getNeighborSpans(new Span(50, 100, 70, 80)),
+    [new Span(0, 50, 20, 100),
+     new Span(50, 100, 0, 70),
      new Span(50, 100, 80, 100)]
   );
 
   assertArrayOfObjectsEqual(
     tree.getNeighborSpans(new Span(50, 100, 80, 100)),
     [new Span(0, 50, 20, 100),
-     new Span(50, 70, 0, 80),
-     new Span(70, 100, 0, 80)]
+     new Span(50, 100, 70, 80)]
   );
 }
 
