@@ -1,7 +1,7 @@
 /**
  * Various drawing functions.
  */
-import { Span, Tree2D, createTree, colorizeTree } from "./canvas_objects";
+import { Span, Tree2D, createTree, colorizeTree } from "./canvas_objects.js";
 
 const WIDTH_SCALE = 2;
 const HEIGHT_SCALE = 2;
@@ -16,9 +16,9 @@ const SCALE_COEFF_RANGE = [3, 5];
  * @param context - Drawing context.
  * @param picture - Internal picture representation.
  */
-function drawFrames(context, picture) {
+function drawFrames(context: CanvasRenderingContext2D, picture: Tree2D) {
   context.lineWidth = FRAME_LINE_WIDTH;
-  context.stokeStyle = FRAME_LINE_COLOR;
+  context.strokeStyle = FRAME_LINE_COLOR;
   context.strokeRect(
     picture.canvasSpan.xmin,
     picture.canvasSpan.ymin,
@@ -40,9 +40,11 @@ function drawFrames(context, picture) {
  * @param context - Drawing context.
  * @param picture - Internal picture representation.
  */
-function drawTiles(context, picture) {
+function drawTiles(context: CanvasRenderingContext2D, picture: Tree2D) {
   for (let currSpan of picture.getChildrenSpans()) {
-    context.fillStyle = currSpan.color;
+    if (currSpan.color) {
+      context.fillStyle = currSpan.color;
+    }
     context.fillRect(
       currSpan.xmin,
       currSpan.ymin,
@@ -55,10 +57,13 @@ function drawTiles(context, picture) {
  * Draws final picture.
  * @param canvas - Drawing canvas.
  */
-function draw(canvas) {
+function draw(canvas: HTMLCanvasElement) {
   let context = canvas.getContext("2d");
+  if (!context) {
+    return;
+  }
   let canvasSpan = new Span(0, canvas.width, 0, canvas.height);
-  let getRandomInt = (min, max) => {
+  let getRandomInt = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
   let picture = createTree(canvasSpan,
@@ -76,11 +81,14 @@ function draw(canvas) {
  * Main function.
  */
 function main() {
-  let canvas = <HTMLCanvasElement> document.getElementById("currCanvas");
+  let canvas = document.getElementById("currCanvas") as HTMLCanvasElement | null;
+  if (!canvas) {
+    return;
+  }
   canvas.width = WIDTH_SCALE * document.body.clientWidth;
   canvas.height = HEIGHT_SCALE * document.body.clientHeight;
-  canvas.addEventListener("click", (_) => draw(canvas));
+  canvas.addEventListener("click", () => draw(canvas));
   draw(canvas);
-};
+}
 
 main();

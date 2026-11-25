@@ -26,7 +26,7 @@ function segmentsIntersect(s1: number,
  * Represents single tile on picture.
  */
 class Span {
-  color: string;
+  color?: string;
   area: number;
   constructor (public xmin: number, public xmax: number,
                public ymin: number, public ymax: number) {
@@ -77,8 +77,8 @@ enum Axis { X, Y }
  * Represents 2d tree node.
  */
 class TreeNode {
-  leftChild: TreeNode;
-  rightChild: TreeNode;
+  leftChild?: TreeNode;
+  rightChild?: TreeNode;
   constructor(public point: Point, public axis: Axis,
               public rightSpan: Span, public leftSpan: Span) {
   }
@@ -88,14 +88,14 @@ class TreeNode {
  * Represents 2D tree.
  */
 class Tree2D {
-  private root: TreeNode;
+  private root?: TreeNode;
   constructor(public canvasSpan: Span) {
   }
 
   /**
    * Handles tree node insertion.
    */
-  private insertNode(p: Point, currNode: TreeNode, axis: Axis, nodeSpan: Span) {
+  private insertNode(p: Point, currNode: TreeNode | undefined, axis: Axis, nodeSpan: Span): TreeNode {
     if (!currNode) {
       let leftSpan: Span, rightSpan: Span;
       if (axis === Axis.X) {
@@ -139,7 +139,7 @@ class Tree2D {
    */
   getChildrenSpans(): Array<Span> {
     let result: Span[] = [];
-    let spansInOrder = (node: TreeNode) => {
+    let spansInOrder = (node: TreeNode | undefined) => {
       if (node) {
         spansInOrder(node.leftChild);
         if (!node.leftChild) {
@@ -179,7 +179,7 @@ class Tree2D {
 function createTree(canvasSpan: Span,
                     numPoints: number,
                     scaleK: number): Tree2D {
-  let getRandomInt = (min, max) => {
+  let getRandomInt = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min)) + Math.floor(min);
   };
 
@@ -227,21 +227,21 @@ function colorizeTree(tree: Tree2D) {
   let numWhiteTiles = (
     numTiles - numRedTiles - numBlueTiles - numYellowTiles - numBlackTiles);
 
-  let arrayRepeat = (e, times) => {
-    let output = [];
+  let arrayRepeat = (e: string, times: number): string[] => {
+    let output: string[] = [];
     for (let i = 0; i < times; i++) {
       output.push(e);
     }
     return output;
   };
 
-  let availableColors = [].concat(arrayRepeat(WHITE_COLOR, numWhiteTiles))
+  let availableColors: string[] = arrayRepeat(WHITE_COLOR, numWhiteTiles)
     .concat(arrayRepeat(RED_COLOR, numRedTiles))
     .concat(arrayRepeat(BLUE_COLOR, numBlueTiles))
     .concat(arrayRepeat(YELLOW_COLOR, numYellowTiles))
     .concat(arrayRepeat(BLACK_COLOR, numBlackTiles));
 
-  let shuffleArray = (arr) => {
+  let shuffleArray = (arr: string[]) => {
     for (let i = arr.length; i; i--) {
       let j = Math.floor(Math.random() * i);
       let x = arr[i - 1];
@@ -250,7 +250,7 @@ function colorizeTree(tree: Tree2D) {
      }
   };
 
-  let count = (arr, el) => {
+  let count = <T>(arr: T[], el: T): number => {
     let counter = 0;
     for (let i = 0; i < arr.length; i++) {
       if (arr[i] === el) {
@@ -277,6 +277,9 @@ function colorizeTree(tree: Tree2D) {
       } else {
         shuffleArray(availableColors);
       }
+    }
+    if (!span.color) {
+      span.color = availableColors[0] ?? WHITE_COLOR;
     }
     availableColors.shift();
   }

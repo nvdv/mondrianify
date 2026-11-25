@@ -1,6 +1,6 @@
-import { Span, Point, Tree2D } from "../canvas_objects";
+import { Span, Point, Tree2D } from "../canvas_objects.js";
 
-function isEqual(a, b) {
+function isEqual(a: object, b: object): boolean {
   let aProps = Object.getOwnPropertyNames(a);
   let bProps = Object.getOwnPropertyNames(b);
 
@@ -8,29 +8,31 @@ function isEqual(a, b) {
     return false;
   }
 
+  let aRecord = a as Record<string, unknown>;
+  let bRecord = b as Record<string, unknown>;
   for (let i = 0; i < aProps.length; i++) {
     let propName = aProps[i];
-    if (a[propName] !== b[propName]) {
+    if (aRecord[propName] !== bRecord[propName]) {
       return false;
     }
   }
   return true;
 }
 
-function assertEqual(op1, op2) {
+function assertEqual(op1: object, op2: object) {
   if (!isEqual(op1, op2)) {
     throw new Error(
       JSON.stringify(op1) + " is not equal to " + JSON.stringify(op2));
   }
 }
 
-function assertTrue(op1) {
+function assertTrue(op1: boolean) {
   if (!op1) {
     throw new Error(JSON.stringify(op1) + " is not true ");
   }
 }
 
-function assertArrayOfObjectsEqual(arr1, arr2) {
+function assertArrayOfObjectsEqual(arr1: object[], arr2: object[]) {
   if (arr1.length !== arr2.length) {
     throw new Error(
       JSON.stringify(arr1) + " is not equal to " + JSON.stringify(arr2));
